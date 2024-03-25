@@ -1,7 +1,7 @@
 pragma solidity >=0.7.0 <0.9.0; //solidity version
 contract AdminAccessOnly {
     uint private adminCode;
-    address public admin;
+    address private admin;
 
     constructor() {
         adminCode = 143;
