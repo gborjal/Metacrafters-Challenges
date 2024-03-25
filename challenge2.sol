@@ -1,33 +1,30 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.*;
-contract Challenge2 {
-    uint private value;
+pragma solidity ^0.8.15; 
 
-
-    function getValue() public view returns(uint) {
-        return value;
-    }
-
-
-    function add(uint _a, uint _b) public pure returns(uint) {
+contract payableContractChallenge {
+    uint private balance = 0;
+    
+    function add(uint _a, uint _b) internal pure returns(uint) {
         return _a + _b;
     }
-
-
-    function deposit() public payable {
-        value += msg.value;
+    function getBal() internal view returns(uint) {
+        return balance;
     }
+    function depo() virtual public payable {
+        balance += msg.value;
+    }
+    
+
 }
-
-contract DerivedContract is Challenge2 {
-    function getValueFromBase() public view returns(uint) {
-        return getValue();
+contract DerivedContract is payableContractChallenge {
+    function getBalFromParent() public view returns(uint) {
+        return getBal();
     }
-    function addNumbers(uint _a, uint _b) public pure returns(uint) {
+    function addNums(uint _a, uint _b) public pure returns(uint) {
         return add(_a, _b);
     }
 
-    function deposit() public payable override {
-        super.deposit();
+    function depo() public payable override {
+        super.depo();
     }
 }
